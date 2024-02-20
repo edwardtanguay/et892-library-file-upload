@@ -22,10 +22,10 @@ export interface ILoginFormData {
 }
 
 export const initialLoginformData = {
-	login: '',
-	password: '',
-	message: ''
-}
+	login: "",
+	password: "",
+	message: "",
+};
 
 export interface ICurrentUser {
 	fullName: string;
@@ -34,9 +34,42 @@ export interface ICurrentUser {
 	email: string;
 }
 
-export const initialCurrentUser:ICurrentUser = {
-	fullName: '',
-	accessGroups: '',
-	login: '',
-	email: ''
+export const initialCurrentUser: ICurrentUser = {
+	fullName: "",
+	accessGroups: "",
+	login: "",
+	email: "",
+};
+
+export interface IFileItem {
+	firstName: string;
+	lastName: string;
+	login: string;
+	email: string;
+	fileName: string;
+	iconPathAndFileName: string;
 }
+
+export interface IFormFields {
+	firstName: string;
+	lastName: string;
+	login: string;
+	email: string;
+}
+
+export const _initialFormFields = {
+	firstName: "",
+	lastName: "",
+	login: "",
+	email: "",
+};
+
+export interface IUploadFile {
+	file: File | null;
+	preview: string;
+}
+
+export const _initialUploadFile: IUploadFile = {
+	preview: "",
+	file: null,
+};
