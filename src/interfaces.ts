@@ -32,6 +32,7 @@ export interface ICurrentUser {
 	accessGroups: string;
 	login: string;
 	email: string;
+	imageExists: boolean;
 }
 
 export const initialCurrentUser: ICurrentUser = {
@@ -39,6 +40,7 @@ export const initialCurrentUser: ICurrentUser = {
 	accessGroups: "",
 	login: "",
 	email: "",
+	imageExists: false
 };
 
 export interface IFileItem {

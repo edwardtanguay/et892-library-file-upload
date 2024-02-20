@@ -5,7 +5,7 @@ import express from "express";
 import jwt from "jsonwebtoken";
 import * as config from "../../config";
 import * as jwttools from "../../jwttools";
-import * as tools from '../../tools';
+import * as tools from "../../tools";
 
 interface CustomRequest extends Request {
 	token: string;
@@ -94,14 +94,14 @@ export const loginUser = async (req: any, res: express.Response) => {
 		const { login } = req.body;
 		const user = await User.findOne({ login });
 		if (user !== null) {
-			const seconds = 10;
+			const seconds = 30;
 			jwt.sign(
 				{ user },
 				config.sessionSecret(),
 				{ expiresIn: seconds + "s" },
 				(err: any, token: any) => {
 					res.json({
-						currentUser: tools.getCurrentUserFromUser(user), 
+						currentUser: tools.getCurrentUserFromUser(user),
 						token,
 					});
 				}
@@ -116,7 +116,7 @@ export const loginUser = async (req: any, res: express.Response) => {
 
 export const getCurrentUser = async (req: any, res: express.Response) => {
 	try {
-		const _anonymousUser = await User.findOne({ login: 'anonymousUser' });
+		const _anonymousUser = await User.findOne({ login: "anonymousUser" });
 		const anonymousUser = tools.getCurrentUserFromUser(_anonymousUser);
 		jwt.verify(
 			(req as unknown as CustomRequest).token,
@@ -124,20 +124,39 @@ export const getCurrentUser = async (req: any, res: express.Response) => {
 			(err: any) => {
 				if (err) {
 					res.json({
-						currentUser: anonymousUser
-					})
+						currentUser: anonymousUser,
+					});
 				} else {
 					const data = jwttools.decodeJwt(
 						(req as unknown as CustomRequest).token
 					);
 					const currentUser = tools.getCurrentUserFromUser(data.user);
 					res.json({
-						currentUser 
+						currentUser,
 					});
 				}
 			}
 		);
 	} catch (e) {
 		handleError(res, e);
+	}
+};
+
+export const updateProfile = async (req: any, res: express.Response) => {
+	try {
+		const { login, firstName, lastName, email } = req.body;
+		const user = await User.findOne({ login });
+		if (user) {
+			user.login = login;
+			user.firstName = firstName;
+			user.lastName = lastName;
+			user.email = email;
+			await User.findByIdAndUpdate(user.id, user);
+			res.json({ status: "updated" });
+		} else {
+			res.status(500).json({ status: "error" });
+		}
+	} catch (err) {
+		res.status(500).json({ status: "error" });
 	}
 };

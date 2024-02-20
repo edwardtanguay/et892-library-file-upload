@@ -27,6 +27,7 @@ export const getCurrentUserFromUser = (user: any) => {
 		fullName: `${user.firstName} ${user.lastName}`,
 		accessGroups: user.accessGroups,
 		login: user.login,
-		email: user.email
+		email: user.email,
+		imageExists: fs.existsSync(`public/images/users/${user.login}.jpg`),
 	};
 };

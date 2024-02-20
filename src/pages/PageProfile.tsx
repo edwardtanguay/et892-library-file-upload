@@ -19,7 +19,11 @@ export const PageProfile = () => {
 					<div className="flex gap-3">
 						<img
 							className="w-[7rem]"
-							src="images/users/defaultProfile.jpg"
+							src={
+								currentUser.imageExists
+									? `images/users/${currentUser.login}.jpg?${tools.getRandomCode()}`
+									: `images/users/defaultProfile.jpg`
+							}
 						/>
 						<div>
 							<p className="text-2xl">{currentUser.fullName}</p>
