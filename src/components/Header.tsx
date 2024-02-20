@@ -9,7 +9,7 @@ export const Header = () => {
 
 	return (
 		<>
-			{config.isDebugging() && <div className="bg-black text-yellow-300 text-sm p-2 font-mono border-dashed border-red-800 border-4 mb-3 w-fit">CURRENT USER: {currentUser.fullName} - {currentUser.accessGroups}</div>}
+			{config.isDebugging() && <div className="bg-black text-yellow-300 text-sm p-2 font-mono border-dashed border-red-800 border-4 mb-3 w-fit">CURRENT USER: {currentUser.fullName} - {currentUser.accessGroups} - {currentUser.imageExists ? 'image exists' : 'image does NOT exist'}</div>}
 			<h1 className="text-3xl mb-3 text-slate-800 flex gap-3">
 				<div>Library Site</div>
 				{tools.isMemberOfAccessGroup(currentUser, "loggedInUsers") && (

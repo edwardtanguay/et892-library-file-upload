@@ -36,7 +36,7 @@ interface IAppContext {
 	formFields: IFormFields;
 	setFormFields: (field: IFormFields) => void;
 	fileItems: IFileItem[];
-	handleImageUploadForm: (e: React.FormEvent<HTMLFormElement>) => void;
+	handleImageUploadForm: (e: React.FormEvent<HTMLFormElement>, onSuccess: () => void) => void;
 	handleImageFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	handleFormFieldChange: (
 		e: React.ChangeEvent<HTMLInputElement>,
@@ -176,23 +176,24 @@ export const AppProvider: React.FC<IAppProvider> = ({ children }) => {
 	};
 
 	const handleImageUploadForm = async (
-		e: React.FormEvent<HTMLFormElement>
+		e: React.FormEvent<HTMLFormElement>, onSuccess: () => void
 	) => {
 		e.preventDefault();
 		if (uploadFile.file && formFields.firstName.trim() !== "") {
 			const formData = new FormData();
-			formData.append("file", uploadFile.file);
 			formData.append("firstName", formFields.firstName);
 			formData.append("lastName", formFields.lastName);
 			formData.append("login", formFields.login);
 			formData.append("email", formFields.email);
 			formData.append("fileName", `${formFields.login}.jpg`); // FIX
+			formData.append("file", uploadFile.file);
 			await fetch(`${backendUrl}/users/profile`, {
 				method: "POST",
 				body: formData,
 			});
-			setFormFields({ ..._initialFormFields });
+			// setFormFields({ ..._initialFormFields });
 			setUploadFile({ ..._initialUploadFile });
+			onSuccess()
 		} // TODO: error checking
 	};
 
