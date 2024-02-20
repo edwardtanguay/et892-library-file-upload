@@ -23,6 +23,11 @@ export const Nav = () => {
 						<NavLink to="/users">Users</NavLink>
 					</li>
 				)}
+				{tools.isMemberOfAccessGroup(currentUser, "members") && (
+					<li>
+						<NavLink to="/profile">Profile</NavLink>
+					</li>
+				)}
 				{tools.isMemberOfAccessGroup(currentUser, "loggedOutUsers") && (
 					<li>
 						<NavLink to="/login">Login</NavLink>
