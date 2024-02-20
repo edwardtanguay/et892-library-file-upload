@@ -5,7 +5,7 @@ POST {{url}}/books
 content-type: application/json
 	
 {
-	"title": "Book 001",
+	"title": "Book 002",
 	"authors": [
 		"John Granger",
 		"Jines Hooplaton"

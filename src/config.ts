@@ -1,3 +1,3 @@
 export const isDebugging = () => {
-	return false;
+	return true;
 };
